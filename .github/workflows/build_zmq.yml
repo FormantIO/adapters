@@ -19,7 +19,7 @@ jobs:
     # Calculate the release tag using the date command
     - name: Set release tag
       id: vars
-      run: echo "::set-output name=release_tag::release-$(date +'%Y%m%d%H%M%S')"
+      run: echo "::set-output name=release_tag::release-$(date +'%Y-%m-%d-%H:%M:%S')"
 
     - name: Create Release
       id: create_release
