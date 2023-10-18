@@ -1,0 +1,21 @@
+{
+    "zmq_adapter_configuration": {
+        "general_config": {
+            "port_start": 42000,
+            "port_end": 42100
+        },
+        "socket_config": {
+            "TCP_KEEPALIVE": 1,
+            "TCP_KEEPALIVE_CNT": 2,
+            "TCP_KEEPALIVE_IDLE": 1,
+            "TCP_KEEPALIVE_INTVL": 1,
+            "LINGER": 5000,
+            "TCP_MAXRT": 500
+        },
+        "blacklist": [],
+        "commands": [
+            "test_cloud_sdk"
+        ],
+        "command_port": 4343
+    }
+}
