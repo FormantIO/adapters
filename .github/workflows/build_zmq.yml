@@ -15,13 +15,24 @@ jobs:
 
     - name: Run build script
       run: ./zmq_adapter/build.sh 
-    - name: Create GitHub Release and Upload ZIP
-      uses: gh-actions/gh-release@v1
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
       with:
-        token: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
-        name: Release ${{ github.sha }}
         tag_name: ${{ github.sha }}
-        body: "Release for ${{ github.sha }}"
+        release_name: Release ${{ github.sha }}
         draft: false
         prerelease: false
-        files: ./zmq_adapter/zmq_adapter.zip 
+      env:
+        GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
+
+    - name: Upload Release Asset
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }} # from the output of create_release step
+        asset_path: ./zmq_adapter.zip
+        asset_name: zmq_adapter.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
