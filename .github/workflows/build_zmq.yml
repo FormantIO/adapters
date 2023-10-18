@@ -16,12 +16,17 @@ jobs:
     - name: Run build script
       run: ./zmq_adapter/build.sh 
 
+    # Calculate the release tag using the date command
+    - name: Set release tag
+      id: vars
+      run: echo "::set-output name=release_tag::release-$(date +'%Y%m%d%H%M%S')"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
       with:
-        tag_name: release-$(date +'%Y%m%d%H%M%S')
-        release_name: Release $(date +'%Y%m%d%H%M%S')
+        tag_name: ${{ steps.vars.outputs.release_tag }}
+        release_name: Release ${{ steps.vars.outputs.release_tag }}
         draft: false
         prerelease: false
       env:
@@ -31,7 +36,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # from the output of create_release step
-        asset_path: ./zmq_adapter.zip
+        asset_path: ./zmq_adapter/zmq_adapter.zip # adjust the path based on where your build.sh script outputs the .zip file
         asset_name: zmq_adapter.zip
         asset_content_type: application/zip
       env:
