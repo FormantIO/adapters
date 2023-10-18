@@ -1,0 +1,83 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://formant.io/formant_zmq_adapter_configuration.schema.json",
+    "title": "ZMQ Adapter Configuration",
+    "description": "Configuration for all capabilities of the ZMQ Adapter.",
+    "type": "object",
+    "properties": {
+        "zmq_adapter_configuration": {
+            "type": "object",
+            "properties": {
+                "general_config": {
+                    "type": "object",
+                    "properties": {
+                        "port_start": {
+                            "type": "integer"
+                        },
+                        "port_end": {
+                            "type": "integer"
+                        }
+                    },
+                    "required": [
+                        "port_start",
+                        "port_end"
+                    ]
+                },
+                "socket_config": {
+                    "type": "object",
+                    "properties": {
+                        "TCP_KEEPALIVE": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "TCP_KEEPALIVE_CNT": {
+                            "type": "integer",
+                            "default": 2
+                        },
+                        "TCP_KEEPALIVE_IDLE": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "TCP_KEEPALIVE_INTVL": {
+                            "type": "integer",
+                            "default": 1
+                        },
+                        "LINGER": {
+                            "type": "integer",
+                            "default": 5000
+                        },
+                        "TCP_MAXRT": {
+                            "type": "integer",
+                            "default": 500
+                        }
+                    }
+                },
+                "blacklist": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "commands": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "command_port": {
+                    "type": "integer"
+                }
+            },
+            "required": [
+                "general_config",
+                "socket_config",
+                "blacklist",
+                "commands",
+                "command_port"
+            ]
+        }
+    },
+    "required": [
+        "zmq_adapter_configuration"
+    ]
+}

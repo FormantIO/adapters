@@ -1,0 +1,27 @@
+name: Build and Release ZMQ
+
+on:
+  push:
+    branches:
+      - main 
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run build script
+      run: ./zmq_adapter/build.sh 
+    - name: Create GitHub Release and Upload ZIP
+      uses: gh-actions/gh-release@v1
+      with:
+        token: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
+        name: Release ${{ github.sha }}
+        tag_name: ${{ github.sha }}
+        body: "Release for ${{ github.sha }}"
+        draft: false
+        prerelease: false
+        files: ./zmq_adapter/zmq_adapter.zip 
