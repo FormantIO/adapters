@@ -1,3 +1,3 @@
 #!/bin/bash
 
-zip -r adapter.zip ./button-toggle-adapter/adapter 
+zip -r adapter.zip adapter 
