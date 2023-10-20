@@ -81,3 +81,41 @@ jobs:
         asset_content_type: application/zip
       env:
         GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
+
+  build-ros-service-call-adapter:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run build script for ROS Service Call Adapter
+      run: |
+        cd ros-service-call-adapter
+        ./create-adapter-zip.sh
+      working-directory: ${{ github.workspace }}
+
+    - name: Set release tag for ROS Service Call Adapter
+      id: ros-service-call-vars
+      run: echo "::set-output name=release_tag::ros-service-call-release-$(date +'%Y-%m-%d-%H%M%S')"
+
+    - name: Create Release for ROS Service Call Adapter
+      id: ros-service-call-create-release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ steps.ros-service-call-vars.outputs.release_tag }}
+        release_name: Release ${{ steps.ros-service-call-vars.outputs.release_tag }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
+
+    - name: Upload Release Asset for ROS Service Call Adapter
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.ros-service-call-create-release.outputs.upload_url }}
+        asset_path: ${{ github.workspace }}/ros-service-call-adapter/ros_service_call_adapter.zip
+        asset_name: ros_service_call_adapter.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
