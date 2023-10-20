@@ -92,7 +92,7 @@ jobs:
     - name: Run build script for ROS Service Call Adapter
       run: |
         cd ros-service-call-adapter
-        ./create-adapter-zip.sh
+        ./create_adapter_zip.sh
       working-directory: ${{ github.workspace }}
 
     - name: Set release tag for ROS Service Call Adapter
