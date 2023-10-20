@@ -13,14 +13,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run build script
-      run: ./button-toggle-adapter/create-adapter-zip.sh 
+    - name: Run build script for Button Toggle Adapter
+      run: |
+        cd button-toggle-adapter
+        ./create-adapter-zip.sh
+      working-directory: ${{ github.workspace }}
 
-    - name: Set release tag
+    - name: Set release tag for Button Toggle Adapter
       id: button-toggle-vars
       run: echo "::set-output name=release_tag::button-toggle-release-$(date +'%Y-%m-%d-%H%M%S')"
 
-    - name: Create Release
+    - name: Create Release for Button Toggle Adapter
       id: button-toggle-create-release
       uses: actions/create-release@v1
       with:
@@ -31,11 +34,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset for Button Toggle Adapter
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.button-toggle-create-release.outputs.upload_url }}
-        asset_path: ./adapter.zip
+        asset_path: ${{ github.workspace }}/button-toggle-adapter/adapter.zip
         asset_name: button_toggle_adapter.zip
         asset_content_type: application/zip
       env:
@@ -48,14 +51,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run build script
-      run: ./zmq_adapter/build.sh 
+    - name: Run build script for ZMQ Adapter
+      run: |
+        cd zmq_adapter
+        ./build.sh
+      working-directory: ${{ github.workspace }}
 
-    - name: Set release tag
+    - name: Set release tag for ZMQ Adapter
       id: zmq-vars
       run: echo "::set-output name=release_tag::zmq-release-$(date +'%Y-%m-%d-%H%M%S')"
 
-    - name: Create Release
+    - name: Create Release for ZMQ Adapter
       id: zmq-create-release
       uses: actions/create-release@v1
       with:
@@ -66,11 +72,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.ADAPTER_GITHUB_TOKEN }}
 
-    - name: Upload Release Asset
+    - name: Upload Release Asset for ZMQ Adapter
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.zmq-create-release.outputs.upload_url }}
-        asset_path: ./zmq_adapter.zip
+        asset_path: ${{ github.workspace }}/zmq_adapter/zmq_adapter.zip
         asset_name: zmq_adapter.zip
         asset_content_type: application/zip
       env:
