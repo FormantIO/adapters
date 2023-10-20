@@ -1,4 +1,4 @@
-name: Build and Release ZMQ
+name: Build and Release ZMQ Adapter
 
 on:
   push:

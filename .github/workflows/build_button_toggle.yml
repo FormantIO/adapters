@@ -1,4 +1,4 @@
-name: Build and Release ZMQ
+name: Build and Release Button Toggle Adapter
 
 on:
   push:
